@@ -2,6 +2,9 @@ package de.exxcellent.challenge.dtos;
 
 import com.opencsv.bean.CsvBindByName;
 
+/**
+ * Data transfer object for football teams
+ */
 public class FootballDataDto extends Dto{
     @CsvBindByName(column = "Team")
     private String team;
