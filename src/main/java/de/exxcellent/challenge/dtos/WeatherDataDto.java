@@ -21,4 +21,8 @@ public class WeatherDataDto extends Dto{
     public int getMaxTemp() {
         return maxTemp;
     }
+
+    public int getTempDifference() {
+        return Math.abs(maxTemp - minTemp);
+    }
 }
