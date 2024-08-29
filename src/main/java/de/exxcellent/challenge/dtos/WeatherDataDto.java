@@ -2,6 +2,9 @@ package de.exxcellent.challenge.dtos;
 
 import com.opencsv.bean.CsvBindByName;
 
+/**
+ * Data transfer object containing temperature information for a day
+ */
 public class WeatherDataDto extends Dto{
     @CsvBindByName(column = "Day")
     private int day;

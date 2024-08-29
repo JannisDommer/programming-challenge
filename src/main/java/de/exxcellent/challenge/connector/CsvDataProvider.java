@@ -10,6 +10,10 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.List;
 
+/**
+ * DataProvider for converting contents of a csv file
+ * @param <T> the expected data object to read
+ */
 public class CsvDataProvider<T extends Dto> implements DataProvider<T> {
     private final Class<T> type;
 
@@ -17,6 +21,11 @@ public class CsvDataProvider<T extends Dto> implements DataProvider<T> {
         this.type = type;
     }
 
+    /**
+     * Reads and converts all CSV data provided from the input stream in the desired data object
+     * @param resource an inputStream of a CSV file
+     * @return list of parsed data objects
+     */
     @Override
     public List<T> getAllEntries(InputStream resource) {
         try (CSVReader reader = new CSVReader(new InputStreamReader(resource))) {
