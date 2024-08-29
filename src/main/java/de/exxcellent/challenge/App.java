@@ -1,14 +1,13 @@
 package de.exxcellent.challenge;
 
 import de.exxcellent.challenge.connector.CsvDataProvider;
+import de.exxcellent.challenge.dtos.FootballDataDto;
 import de.exxcellent.challenge.dtos.WeatherDataDto;
-import de.exxcellent.challenge.services.WeatherService;
+import de.exxcellent.challenge.services.ComparatorService;
 
 import java.io.InputStream;
-import java.util.Comparator;
 import java.util.List;
 import java.util.MissingResourceException;
-import java.util.Optional;
 
 /**
  * The entry class for your solution. This class is only aimed as starting point and not intended as baseline for your software
@@ -36,10 +35,21 @@ public final class App {
         CsvDataProvider<WeatherDataDto> weatherDataProvider = new CsvDataProvider<>(WeatherDataDto.class);
         List<WeatherDataDto> weatherData = weatherDataProvider.getAllEntries(weatherStream);
 
-        String dayWithSmallestTempSpread = String.valueOf(WeatherService.findDayWithLowestTemperatureDifference(weatherData).getDay());
+
+        String footballPath = "football.csv";
+        InputStream footballStream = App.class.getResourceAsStream(footballPath);
+
+        if (footballStream == null) {
+            throw new MissingResourceException("Unable to load resource for football challenge", App.class.getName(), footballPath);
+        }
+
+        CsvDataProvider<FootballDataDto> footballDataProvider = new CsvDataProvider<>(FootballDataDto.class);
+        List<FootballDataDto> footballData = footballDataProvider.getAllEntries(footballStream);
+
+        String dayWithSmallestTempSpread = String.valueOf(ComparatorService.findDayWithLowestTemperatureDifference(weatherData).getDay());
         System.out.printf("Day with smallest temperature spread : %s%n", dayWithSmallestTempSpread);
 
-        String teamWithSmallestGoalSpread = "A good team"; // Your goal analysis function call …
+        String teamWithSmallestGoalSpread = ComparatorService.findTeamWithSmallestGoalDistance(footballData).getTeam();
         System.out.printf("Team with smallest goal spread       : %s%n", teamWithSmallestGoalSpread);
     }
 }
