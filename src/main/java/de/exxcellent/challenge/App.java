@@ -1,12 +1,14 @@
 package de.exxcellent.challenge;
 
-import com.opencsv.CSVReader;
-import com.opencsv.exceptions.CsvException;
+import de.exxcellent.challenge.connector.CsvDataProvider;
+import de.exxcellent.challenge.dtos.WeatherDataDto;
+import de.exxcellent.challenge.services.WeatherService;
 
-import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.util.Comparator;
+import java.util.List;
 import java.util.MissingResourceException;
+import java.util.Optional;
 
 /**
  * The entry class for your solution. This class is only aimed as starting point and not intended as baseline for your software
@@ -31,15 +33,10 @@ public final class App {
             throw new MissingResourceException("Unable to load resource for weather challenge", App.class.getName(), weatherFilePath);
         }
 
-        try (CSVReader reader = new CSVReader(new InputStreamReader(weatherStream))) {
-            reader.readAll().forEach(System.out::println);
+        CsvDataProvider<WeatherDataDto> weatherDataProvider = new CsvDataProvider<>(WeatherDataDto.class);
+        List<WeatherDataDto> weatherData = weatherDataProvider.getAllEntries(weatherStream);
 
-        } catch (CsvException | IOException e) {
-            throw new RuntimeException(e);
-        }
-
-
-        String dayWithSmallestTempSpread = "Someday";     // Your day analysis function call …
+        String dayWithSmallestTempSpread = String.valueOf(WeatherService.findDayWithLowestTemperatureDifference(weatherData).getDay());
         System.out.printf("Day with smallest temperature spread : %s%n", dayWithSmallestTempSpread);
 
         String teamWithSmallestGoalSpread = "A good team"; // Your goal analysis function call …
