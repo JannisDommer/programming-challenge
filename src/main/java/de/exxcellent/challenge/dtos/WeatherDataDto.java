@@ -10,6 +10,17 @@ public class WeatherDataDto extends Dto{
     @CsvBindByName(column = "MxT")
     private int maxTemp;
 
+    // Empty constructor as per bean convention
+    public WeatherDataDto() {
+
+    }
+
+    public WeatherDataDto(int day, int minTemp, int maxTemp) {
+        this.day = day;
+        this.minTemp = minTemp;
+        this.maxTemp = maxTemp;
+    }
+
     public int getDay() {
         return day;
     }
