@@ -2,7 +2,7 @@ package de.exxcellent.challenge;
 
 import de.exxcellent.challenge.connector.CsvDataProvider;
 import de.exxcellent.challenge.dtos.WeatherDataDto;
-import de.exxcellent.challenge.services.WeatherService;
+import de.exxcellent.challenge.services.ComparatorService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Assertions;
 
@@ -28,7 +28,7 @@ class WeatherDataTest {
         WeatherDataDto dto3 = new WeatherDataDto(10, 71, 75);
         List<WeatherDataDto> entries = List.of(dto1, dto2, dto3);
 
-        WeatherDataDto result = WeatherService.findDayWithLowestTemperatureDifference(entries);
+        WeatherDataDto result = ComparatorService.findDayWithLowestTemperatureDifference(entries);
 
         Assertions.assertEquals(40, result.getMinTemp());
         Assertions.assertEquals(42, result.getMaxTemp());
