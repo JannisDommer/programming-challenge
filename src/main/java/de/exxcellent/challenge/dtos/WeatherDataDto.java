@@ -2,7 +2,7 @@ package de.exxcellent.challenge.dtos;
 
 import com.opencsv.bean.CsvBindByName;
 
-public class WeatherDataDto {
+public class WeatherDataDto extends Dto{
     @CsvBindByName(column = "Day")
     private int day;
     @CsvBindByName(column = "MnT")
